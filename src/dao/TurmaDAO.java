@@ -64,15 +64,12 @@ public class TurmaDAO {
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			return recuperaProfessores(stmt, rs);
+			return recuperaTurmas(stmt, rs);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	private List<Turma> recuperaProfessores(Statement stmt, ResultSet rs) {
-		return null;
-	}
 
 	public List<Turma> selectTurmaPorId(String idTurma) {
 		String sql = "SELECT * FROM turma WHERE id = " + idTurma;
