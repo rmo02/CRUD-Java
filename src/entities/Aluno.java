@@ -9,7 +9,7 @@ public class Aluno {
 	private String dataNascimento;
 	private String dataCadastro;
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 

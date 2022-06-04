@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-import dao.AlunoDAO;
+
 import entities.Aluno;
 
 public class Main {
@@ -41,11 +41,17 @@ public class Main {
 				buscarPorId();
 				pressioneQualquerTecla();
 				break;
-			// case "4":
-			// 	limpaTela();
-			// 	AlunoDAO.;
-			// 	pressioneQualquerTecla();
-			// 	break;
+			 case "4":
+			 	limpaTela();
+			 	atualizarAluno();
+			 	pressioneQualquerTecla();
+			 	break;
+		    
+			case "5":
+			 	limpaTela();
+			 	deletarAluno();
+			 	pressioneQualquerTecla();
+			 	break;
 
 			case "6":
 				limpaTela();
@@ -100,6 +106,32 @@ public class Main {
 		alunoService.validaAluno(aluno);
 	}
 
+	private static void atualizarAluno() {
+		Aluno aluno = new Aluno();
+
+		System.out.println("Informe o id do aluno que deseja atualizar:");
+		int respostaId = Integer.parseInt(entrada.nextLine());
+		aluno.setId(respostaId);
+
+		System.out.println("Informe o novo nome do aluno:");
+		String resposta = entrada.nextLine();
+		aluno.setNome(resposta);
+
+		System.out.println("Informe o novo nome da Mae do Aluno:");
+		resposta = entrada.nextLine();
+		aluno.setNomeMae(resposta);
+
+		System.out.println("Informe o novo nome do Pai do Aluno:");
+		resposta = entrada.nextLine();
+		aluno.setNomePai(resposta);
+
+		System.out.println("Informe a nova data de nascimento do aluno (Ex.: 22/02/2000):");
+		resposta = entrada.nextLine();
+		aluno.setDataNascimento(resposta);
+
+		alunoService.atualizarAlunoValidacao(aluno);
+	}
+
 	private static void listarAlunos() {
 		List<Aluno> listaAlunos = alunoService.listaAlunos();
 		printaAlunos(listaAlunos);
@@ -112,6 +144,12 @@ public class Main {
 		printaAlunos(listaAlunos);
 	}
 	
+	private static void deletarAluno() {
+		System.out.println("Informe o id do aluno que deseja deletar:");
+		int respostaId = Integer.parseInt(entrada.nextLine());
+
+		alunoService.deletarAlunoValidacao(respostaId);
+	}
 
 	private static void printaAlunos(List<Aluno> listaAlunos) {
 		Iterator<Aluno> it = listaAlunos.iterator();

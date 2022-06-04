@@ -10,7 +10,7 @@ public class DataBase {
 		Connection conn = null;
 
 		try {
-			String DB_CONNECTION = "jdbc:mysql://localhost:3306/escola?user=root&password=admin";
+			String DB_CONNECTION = "jdbc:mysql://localhost:3306/escola?user=root&password=root";
 			return DriverManager.getConnection(DB_CONNECTION);
 		} catch (SQLException e) {
 			e.printStackTrace();

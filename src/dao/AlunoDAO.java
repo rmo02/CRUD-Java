@@ -31,29 +31,36 @@ public class AlunoDAO {
 		}
 	}
 
-	public void excluirAluno(String idAluno) {
-		String sql = "DELETE FROM aluno WHERE id = ?";
-		try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-			preparedStatement.setString(1, idAluno);
-			preparedStatement.execute();
+	public void atualizarAluno(Aluno aluno) {
+		String sql = "UPDATE aluno SET nome = ?, nome_mae = ?, nome_pai = ?, dt_nasc = ?, dt_cadastro = ? "+
+				"WHERE id = ?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, aluno.getNome());
+			stmt.setString(2, aluno.getNomeMae());
+			stmt.setString(3, aluno.getNomePai());
+			stmt.setString(4, aluno.getDataNascimento());
+			stmt.setString(5, aluno.getDataCadastro());
+			stmt.setInt(6, aluno.getId());
+			stmt.execute();
+			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			System.out.println("Problemas ao atualizar aluno, linha de erro: " + e.getMessage());
 		}
 	}
 
-	public void atualizarAluno(Aluno aluno){
-		String sql = "UPDATE aluno SET nome = ?, nome_mae = ?, nome_pai = ?, dt_nasc = ? WHERE id = ?";
-		try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-			preparedStatement.setInt(5, aluno.getId());
-			preparedStatement.setString(1, aluno.getNome());
-			preparedStatement.setString(2, aluno.getNomeMae());
-			preparedStatement.setString(3, aluno.getNomePai());
-			preparedStatement.setString(4, aluno.getDataNascimento());
-			preparedStatement.execute();
-		}catch(SQLException e){
-			e.printStackTrace();
+	public void excluirAluno(int id) {
+		String sql = "DELETE FROM aluno WHERE id = ?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, id);
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println("Problemas ao deletar aluno, linha de erro: " + e.getMessage());
 		}
 	}
+	
 
 	public List<Aluno> selectListaAlunos() {
 		String sql = "SELECT * FROM aluno";
