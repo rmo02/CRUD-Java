@@ -1,6 +1,7 @@
 
 import service.AlunoService;
 import service.ProfessorService;
+import service.TurmaService;
 
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -10,6 +11,7 @@ import java.util.Scanner;
 
 import entities.Aluno;
 import entities.Professor;
+import entities.Turma;
 
 public class Main {
 
@@ -19,6 +21,7 @@ public class Main {
 	// classe responsavel por manipular alunos, professor
 	private static AlunoService alunoService = new AlunoService();
 	private static ProfessorService professorService = new ProfessorService();
+	private static TurmaService turmaService = new TurmaService();
 
 	public static void main(String[] args) throws SQLException {
 
@@ -80,6 +83,31 @@ public class Main {
 			 	pressioneQualquerTecla();
 			 	break;
 			case "11":
+			 	limpaTela();
+			 	adicionarTurma();
+			 	pressioneQualquerTecla();
+			 	break;
+			case "12":
+			 	limpaTela();
+			 	listarTurmas();
+			 	pressioneQualquerTecla();
+			 	break;
+			case "13":
+			 	limpaTela();
+			 	buscarPorIddd();
+			 	pressioneQualquerTecla();
+			 	break;
+			case "14":
+			 	limpaTela();
+			 	atualizarTurma();
+			 	pressioneQualquerTecla();
+			 	break;
+			case "15":
+			 	limpaTela();
+			 	deletarTurma();
+			 	pressioneQualquerTecla();
+			 	break;
+			case "16":
 				limpaTela();
 				System.out.println("Tchau... :)");
 				pressioneQualquerTecla();
@@ -110,7 +138,12 @@ public class Main {
 		System.out.println("8 - Buscar professor por id");
 		System.out.println("9 - Atualizar professor por id");
 		System.out.println("10 - Deletar professor");
-		System.out.println("15 - Sair");
+		System.out.println("11 - Cadastrar Turma");
+		System.out.println("12 - Listar turmas");
+		System.out.println("13 - Buscar turma por id");
+		System.out.println("14 - Atualizar turma por id");
+		System.out.println("15 - Deletar tuma");
+		System.out.println("16 - Sair");
 	}
 
 	
@@ -285,6 +318,78 @@ public class Main {
 		}
 	}
 
+	//Turma
+
+	private static void adicionarTurma() {
+		Turma turma = new Turma();
+
+		System.out.println("Informe o nome da Turma:");
+		String resposta = entrada.nextLine();
+		turma.setNome(resposta);
+
+		System.out.println("Informe a curso:");
+		resposta = entrada.nextLine();
+		turma.setCurso(resposta);
+
+		System.out.println("Informe o andar:");
+		resposta = entrada.nextLine();
+		turma.setAndar(resposta);
+
+		turmaService.validaTurma(turma);
+	}
+
+	private static void atualizarTurma() {
+		Turma turma = new Turma();
+
+		System.out.println("Informe o id da turma que deseja atualizar:");
+		int respostaId = Integer.parseInt(entrada.nextLine());
+		turma.setId(respostaId);
+
+		System.out.println("Informe o novo nome da turma:");
+		String resposta = entrada.nextLine();
+		turma.setNome(resposta);
+		
+		System.out.println("Informe o curso:");
+		resposta = entrada.nextLine();
+		turma.setCurso(resposta);
+
+		System.out.println("Informe o andar:");
+		resposta = entrada.nextLine();
+		turma.setAndar(resposta);
+
+		turmaService.atualizarTurmaValidacao(turma);
+	}
+
+	private static void listarTurmas() {
+		List<Turma> listaTurmas = turmaService.listaTurmas();
+		printaTurmas(listaTurmas);
+	}
+
+	private static void buscarPorIddd() {
+		System.out.print("Informe o id da turma: ");
+		String idBusca = entrada.nextLine();
+		List<Turma> listaTurmas = turmaService.listaTurmaPorId(idBusca);
+		printaTurmas(listaTurmas);
+	}
+	
+	private static void deletarTurma() {
+		System.out.println("Informe o id da turma que deseja deletar:");
+		int respostaId = Integer.parseInt(entrada.nextLine());
+
+		turmaService.deletarTurmaValidacao(respostaId);
+	}
+
+	private static void printaTurmas(List<Turma> listaTurmas) {
+		Iterator<Turma> it = listaTurmas.iterator();
+
+		while(it.hasNext()) {
+			Turma turma = it.next();
+
+			System.out.printf("%-4s\t", turma.getId());
+			System.out.printf("%-20s\t", turma.getNome());
+			System.out.println();
+		}
+	}
 
 	
 	private static void limpaTela() {
